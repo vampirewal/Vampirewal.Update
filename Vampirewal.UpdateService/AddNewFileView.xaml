@@ -5,14 +5,13 @@
                          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                          xmlns:local="clr-namespace:Vampirewal.UpdateService"
                          xmlns:vc="Vampirewal.CustomControl"
-                         xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
+                         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                          xmlns:hc="https://handyorg.github.io/handycontrol"
                          x:Class="Vampirewal.UpdateService.AddNewFileView"
                          mc:Ignorable="d"
                          d:DesignHeight="450"
                          Title="{Binding Title}"
                          d:DesignWidth="800">
-   
     <VUc:AddOrEditUcViewBase.DataContext>
         <Binding Path="AddNewFileViewModel"
                  Source="{StaticResource Locator}" />
@@ -43,7 +42,6 @@
                         </i:Interaction.Triggers>
                     </ComboBox>
                 </vc:TitleContent>
-
                 <vc:TitleContent Title="Token"
                                  TitleForeground="{StaticResource BaseForeground}"
                                  TitleWidth="80"
@@ -52,7 +50,6 @@
                              Width="260"
                              IsReadOnly="{Binding IsCanEdit,Mode=TwoWay, Converter={StaticResource Boolean2BooleanReConverter}}" />
                 </vc:TitleContent>
-
                 <vc:TitleContent Title="程序名称"
                                  TitleForeground="{StaticResource BaseForeground}"
                                  TitleWidth="80"
@@ -61,7 +58,6 @@
                              IsReadOnly="{Binding IsCanEdit,Mode=TwoWay, Converter={StaticResource Boolean2BooleanReConverter}}"
                              Width="260" />
                 </vc:TitleContent>
-
                 <vc:TitleContent Title="描述"
                                  TitleForeground="{StaticResource BaseForeground}"
                                  TitleWidth="80"
@@ -73,7 +69,6 @@
                              TextWrapping="Wrap"
                              VerticalContentAlignment="Top" />
                 </vc:TitleContent>
-
                 <vc:TitleContent Title="更新描述"
                                  TitleForeground="{StaticResource BaseForeground}"
                                  TitleWidth="80"
@@ -84,7 +79,6 @@
                              Height="100"
                              TextWrapping="Wrap" />
                 </vc:TitleContent>
-
                 <vc:TitleContent Title="更新文件地址"
                                  TitleForeground="{StaticResource BaseForeground}"
                                  TitleWidth="80"
@@ -96,6 +90,7 @@
                         <Button Style="{StaticResource ButtonSuccess}"
                                 Height="35"
                                 Width="50"
+                                Command="{Binding SelectFileSavePathCommand}"
                                 Margin="5,0"
                                 Cursor="Hand">
                             <Path x:Name="content"
@@ -107,9 +102,7 @@
                                   Stretch="Fill" />
                         </Button>
                     </StackPanel>
-
                 </vc:TitleContent>
-
                 <vc:TitleContent Title="版本"
                                  TitleForeground="{StaticResource BaseForeground}"
                                  TitleWidth="80"
@@ -117,7 +110,6 @@
                     <TextBox Text="{Binding Entity.Version, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              Width="260" />
                 </vc:TitleContent>
-
                 <vc:TitleContent TitleForeground="{StaticResource BaseForeground}"
                                  TitleWidth="80"
                                  Margin="5">
@@ -128,6 +120,5 @@
                 </vc:TitleContent>
             </StackPanel>
         </ScrollViewer>
-
     </Grid>
 </VUc:AddOrEditUcViewBase>

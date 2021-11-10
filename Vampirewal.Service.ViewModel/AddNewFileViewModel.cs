@@ -13,10 +13,14 @@
 
 #endregion
 
+using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Forms;
 using Vampirewal.Core.Interface;
 using Vampirewal.Core.SimpleMVVM;
 using Vampirewal.Service.Model;
@@ -111,19 +115,40 @@ namespace Vampirewal.Service.ViewModel
         /// 选择历史项目的命令
         /// </summary>
         public RelayCommand<ComboxValue> SelectOldDataCommand => new RelayCommand<ComboxValue>((c) =>
-         {
-             if (c != null)
-             {
-                 SelectVaule = c;
+        {
+            if (c != null)
+            {
+                SelectVaule = c;
 
-                 Entity.Token = c.key;
-                 Entity.Name = c.Value;
-                 Entity.Description = c.Des;
+                Entity.Token = c.key;
+                Entity.Name = c.Value;
+                Entity.Description = c.Des;
 
 
-                 IsCanEdit = false;
-             }
-         });
+                IsCanEdit = false;
+            }
+        });
+
+        public RelayCommand SelectFileSavePathCommand => new RelayCommand(() =>
+        {
+            //FolderBrowserDialog fb = new FolderBrowserDialog();
+
+            //if (fb.ShowDialog() == DialogResult.OK)
+            //{
+            //    Entity.ZipFilePath = fb.SelectedPath;
+            //}
+
+            System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
+            ofd.Filter = "RAR文件(*.rar*)|*.rar*|ZIP文件(*.zip)|*.zip*";
+            ofd.RestoreDirectory = true;
+            ofd.FilterIndex = 1;
+            ofd.Multiselect = false;
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                Entity.ZipFilePath = ofd.FileName;
+                
+            }
+        });
 
         #endregion
     }
