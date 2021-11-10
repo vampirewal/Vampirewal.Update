@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vampirewal.UpdateService", "Vampirewal.UpdateService\Vampirewal.UpdateService.csproj", "{7E2408D9-F7A9-47FB-8F3C-F7D62B6C9C50}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{0691BA37-46B5-426F-B9A9-250788BBE9B1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{B4751C8B-356E-4446-8948-54D0AD750BDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vampirewal.Service.ViewModel", "Vampirewal.Service.ViewModel\Vampirewal.Service.ViewModel.csproj", "{415B026D-FF86-4224-B4A2-E55A5BF7D1FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vampirewal.Service.Model", "Vampirewal.Service.Model\Vampirewal.Service.Model.csproj", "{D859783E-425E-4778-91E6-E06A14164422}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vampirewal.Service.DataAccess", "Vampirewal.Service.DataAccess\Vampirewal.Service.DataAccess.csproj", "{0E2F2674-1D85-4D40-BAC3-50AF0455DFFA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E2408D9-F7A9-47FB-8F3C-F7D62B6C9C50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E2408D9-F7A9-47FB-8F3C-F7D62B6C9C50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E2408D9-F7A9-47FB-8F3C-F7D62B6C9C50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E2408D9-F7A9-47FB-8F3C-F7D62B6C9C50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{415B026D-FF86-4224-B4A2-E55A5BF7D1FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{415B026D-FF86-4224-B4A2-E55A5BF7D1FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{415B026D-FF86-4224-B4A2-E55A5BF7D1FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{415B026D-FF86-4224-B4A2-E55A5BF7D1FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D859783E-425E-4778-91E6-E06A14164422}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D859783E-425E-4778-91E6-E06A14164422}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D859783E-425E-4778-91E6-E06A14164422}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D859783E-425E-4778-91E6-E06A14164422}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E2F2674-1D85-4D40-BAC3-50AF0455DFFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E2F2674-1D85-4D40-BAC3-50AF0455DFFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E2F2674-1D85-4D40-BAC3-50AF0455DFFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E2F2674-1D85-4D40-BAC3-50AF0455DFFA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7E2408D9-F7A9-47FB-8F3C-F7D62B6C9C50} = {0691BA37-46B5-426F-B9A9-250788BBE9B1}
+		{415B026D-FF86-4224-B4A2-E55A5BF7D1FA} = {0691BA37-46B5-426F-B9A9-250788BBE9B1}
+		{D859783E-425E-4778-91E6-E06A14164422} = {0691BA37-46B5-426F-B9A9-250788BBE9B1}
+		{0E2F2674-1D85-4D40-BAC3-50AF0455DFFA} = {0691BA37-46B5-426F-B9A9-250788BBE9B1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {496B4239-B133-498C-8442-97665E46EFCC}
+	EndGlobalSection
+EndGlobal

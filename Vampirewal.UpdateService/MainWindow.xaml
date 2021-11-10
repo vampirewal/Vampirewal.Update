@@ -1,0 +1,153 @@
+﻿<VWin:MainWindowBase x:Class="Vampirewal.UpdateService.MainWindow"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:VWin="Vampirewal.Windows"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     DataContext="{Binding Source={StaticResource Locator},Path=MainViewModel}"
+                     xmlns:local="clr-namespace:Vampirewal.UpdateService"
+                     mc:Ignorable="d"
+                     Width="1366"
+                     Icon="Vampirewal-Logo.png" Name="MainView"
+                     Height="768"
+                     Background="#2F3437"
+                     Title="{Binding Title}"
+                     Foreground="#EBEBEB"
+                     LeftMenuMaxWidth="230"
+                     IsOpenWindowSize="True">
+    <VWin:MainWindowBase.LeftContent>
+        <Grid>
+            <Border Background="#373C3F"
+                    CornerRadius="5">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="5"
+                                      Direction="0"
+                                      Opacity="0.7"
+                                      ShadowDepth="0"
+                                      Color="#3a3952" />
+                </Border.Effect>
+            </Border>
+
+            <ScrollViewer>
+                <StackPanel>
+                    <!--简介之类的-->
+                    <Border Width="210" Height="210" Margin="5" CornerRadius="5,5,0,0">
+                        <Border.Background>
+                            <ImageBrush ImageSource="Vampirewal-Logo.png" />
+                        </Border.Background>
+                    </Border>
+
+
+                    <Button Style="{StaticResource ButtonSuccess}"
+                            Content="开始运行"
+                            Margin="5" Command="{Binding StartRunServer}" Visibility="{Binding IsStartOk,Converter={StaticResource Boolean2VisibilityReConverter}}"
+                            Width="150" />
+                    <Button Style="{StaticResource ButtonDanger}"
+                            Content="停止运行"
+                            Margin="5" Visibility="{Binding IsStartOk,Converter={StaticResource Boolean2VisibilityConverter}}"
+                            Width="150" />
+                </StackPanel>
+            </ScrollViewer>
+
+        </Grid>
+    </VWin:MainWindowBase.LeftContent>
+
+    <VWin:MainWindowBase.TopCustomButtons>
+        <Button Style="{StaticResource ButtonBaseStyle}"
+                Height="40"
+                Background="Transparent"
+                ToolTip="新增更新文件"
+                Command="{Binding OpenAddNewFileViewCommand}"
+                Cursor="Hand">
+            <Path Name="content"
+                  Width="20"
+                  Height="20"
+                  Data="{StaticResource AddIcon}"
+                  Fill="#74787c"
+                  RenderTransformOrigin="0.5,0.5"
+                  Stretch="Fill" />
+        </Button>
+    </VWin:MainWindowBase.TopCustomButtons>
+    <Grid>
+        <Border Background="{StaticResource BaseForeground}" CornerRadius="5" >
+            <DataGrid ItemsSource="{Binding Programs}"
+                      Margin="5"
+                      AutoGenerateColumns="False"
+                      Background="Transparent"
+                      BorderThickness="0"
+                      HeadersVisibility="All"
+                      RowHeaderWidth="60"
+                      SelectionMode="Single"
+                      VerticalScrollBarVisibility="Auto">
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource DataGridColumnHeaderStyle}">
+
+                        <Setter Property="HorizontalAlignment"
+                                Value="Center" />
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="DataGridCell">
+                                    <Border HorizontalAlignment="Center"
+                                            VerticalAlignment="Center">
+                                        <ContentPresenter />
+                                    </Border>
+
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </DataGrid.CellStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Token"
+                                        Binding="{Binding Token}"
+                                        IsReadOnly="True"
+                                        Width="1*" />
+                    <DataGridTextColumn Header="程序名称"
+                                        Binding="{Binding Name}"
+                                        IsReadOnly="True"
+                                        Width="1*" />
+                    <DataGridTextColumn Header="描述"
+                                        Binding="{Binding Description}"
+                                        IsReadOnly="True"
+                                        Width="1*" />
+
+                    <DataGridTemplateColumn Header="更新描述"
+                                            Width="1*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding UpdateDescription}"
+                                           ToolTip="{Binding UpdateDescription}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTextColumn Header="版本"
+                                        Binding="{Binding Version}"
+                                        IsReadOnly="True"
+                                        Width="0.5*" />
+
+                    <DataGridCheckBoxColumn Header="是否强制更新" IsReadOnly="True"
+                                            Width="0.8*" 
+                                            Binding="{Binding IsForcedUpdate}" />
+
+                    <DataGridTemplateColumn Header="操作" Width="1*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Style="{StaticResource ButtonDanger}"
+                                            Content="删除" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+    </Grid>
+</VWin:MainWindowBase>
