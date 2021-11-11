@@ -28,7 +28,7 @@ using Vampirewal.Service.Model;
 
 namespace Vampirewal.Service.ViewModel
 {
-    public class MainViewModel:ViewModelBase
+    public class MainViewModel : ViewModelBase
     {
         private IDialogMessage Dialog { get; set; }
         public MainViewModel(IAppConfig appConfig, IDialogMessage dialog, IDataContext dc) : base(dc, appConfig)
@@ -58,7 +58,7 @@ namespace Vampirewal.Service.ViewModel
         private void GetProgramsData()
         {
             Programs.Clear();
-            var current = DC.Set<ProgramModel>().OrderByDescending(o=>o.CreateTime).ToList();
+            var current = DC.Set<ProgramModel>().OrderByDescending(o => o.CreateTime).ToList();
             foreach (var item in current)
             {
                 Programs.Add(item);
@@ -67,22 +67,39 @@ namespace Vampirewal.Service.ViewModel
         #endregion
 
         #region 命令
-        public RelayCommand OpenAddNewFileViewCommand=>new RelayCommand(() =>
+        public RelayCommand OpenAddNewFileViewCommand => new RelayCommand(() =>
         {
-            var GetResult= Dialog.OpenDialogWindow(new Core.WpfTheme.WindowStyle.DialogWindowSetting()
+            //var GetResult= Dialog.OpenDialogWindow(new Core.WpfTheme.WindowStyle.DialogWindowSetting()
+            //{
+            //    UiView=Messenger.Default.Send<FrameworkElement>("GetView",ViewKeys.AddNewFileView),
+            //    WindowWidth=400,
+            //    WindowHeight=500,
+            //    IconStr = "",
+            //    IsShowMaxButton = false,
+            //    IsShowMinButton = false,
+            //});
+
+            //if (Convert.ToBoolean(GetResult))
+            //{
+            //    GetProgramsData();
+            //}
+
+            var GetResult = Dialog.OpenDialogWindow(new Core.WpfTheme.WindowStyle.DialogWindowSetting()
             {
-                UiView=Messenger.Default.Send<FrameworkElement>("GetView",ViewKeys.AddNewFileView),
-                WindowWidth=400,
-                WindowHeight=500,
+                UiView = Messenger.Default.Send<FrameworkElement>("GetView", ViewKeys.ProgramInfoView),
+                WindowWidth = 600,
+                WindowHeight = 600,
                 IconStr = "",
                 IsShowMaxButton = false,
                 IsShowMinButton = false,
+                PassData = null
             });
 
             if (Convert.ToBoolean(GetResult))
             {
                 GetProgramsData();
             }
+
         });
 
         private bool _IsStartOk;
@@ -90,10 +107,10 @@ namespace Vampirewal.Service.ViewModel
         public bool IsStartOk
         {
             get { return _IsStartOk; }
-            set { _IsStartOk = value;DoNotify(); }
+            set { _IsStartOk = value; DoNotify(); }
         }
 
-        public RelayCommand StartRunServer => new RelayCommand(() => 
+        public RelayCommand StartRunServer => new RelayCommand(() =>
         {
             try
             {
@@ -107,7 +124,7 @@ namespace Vampirewal.Service.ViewModel
             }
         });
 
-        public RelayCommand StopRunServerCommand=>new RelayCommand(() =>
+        public RelayCommand StopRunServerCommand => new RelayCommand(() =>
         {
             try
             {
@@ -120,11 +137,28 @@ namespace Vampirewal.Service.ViewModel
                 Console.WriteLine(ex.Message);
             }
         });
+
+        /// <summary>
+        /// 查看程序详细命令
+        /// </summary>
+        public RelayCommand<ProgramModel> LookDetailedCommand => new RelayCommand<ProgramModel>((p) =>
+        {
+            var GetResult2 = Dialog.OpenDialogWindow(new Core.WpfTheme.WindowStyle.DialogWindowSetting()
+            {
+                UiView = Messenger.Default.Send<FrameworkElement>("GetView", ViewKeys.ProgramInfoView),
+                WindowWidth = 600,
+                WindowHeight = 600,
+                IconStr = "",
+                IsShowMaxButton = false,
+                IsShowMinButton = false,
+                PassData = p
+            });
+        });
         #endregion
 
         #region TcpService
         FileService fileService { get; set; }
-        public void CreateFileService(string Ip,string Port1,int Port2)
+        public void CreateFileService(string Ip, string Port1, int Port2)
         {
             fileService = new FileService();
 
@@ -205,7 +239,7 @@ namespace Vampirewal.Service.ViewModel
 
             fileService.Setup(config);
 
-            
+
         }
         #endregion
     }

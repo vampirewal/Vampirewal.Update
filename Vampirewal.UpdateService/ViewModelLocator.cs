@@ -31,11 +31,12 @@ namespace Vampirewal.UpdateService
             CustomIoC.Instance.Register<IDataContext, ServiceDataContext>();
 
             CustomIoC.Instance.Register<MainViewModel>();
-            CustomIoC.Instance.Register<AddNewFileViewModel>();
+            CustomIoC.Instance.Register<ProgramInfoViewModel>();
+            CustomIoC.Instance.Register<AddNewProgramDtlViewModel>();
         }
 
         public MainViewModel MainViewModel=>CustomIoC.Instance.GetInstance<MainViewModel>();
-        
-        public AddNewFileViewModel AddNewFileViewModel=>CustomIoC.Instance.GetInstanceWithoutCaching<AddNewFileViewModel>();
+        public ProgramInfoViewModel ProgramInfoViewModel => CustomIoC.Instance.GetInstanceWithoutCaching<ProgramInfoViewModel>();
+        public AddNewProgramDtlViewModel AddNewProgramDtlViewModel => CustomIoC.Instance.GetInstanceWithoutCaching<AddNewProgramDtlViewModel>();
     }
 }

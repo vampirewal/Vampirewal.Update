@@ -1,0 +1,64 @@
+﻿<VUc:AddOrEditUcViewBase x:Class="Vampirewal.UpdateService.AddNewProgramDtlView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             DataContext="{Binding Source={StaticResource Locator},Path=AddNewProgramDtlViewModel}"
+             xmlns:local="clr-namespace:Vampirewal.UpdateService"
+             mc:Ignorable="d" xmlns:VUc="Vampirewal.UcView" xmlns:vc="Vampirewal.CustomControl"
+             d:DesignHeight="400"
+             d:DesignWidth="400">
+    <StackPanel>
+        <vc:TitleContent Title="当前版本" Margin="5"
+                         TitleForeground="{StaticResource BaseForeground}"
+                         TitleWidth="80">
+            <TextBox Text="{Binding Entity.CurrentVersion,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Width="260"/>
+        </vc:TitleContent>
+        <vc:TitleContent Title="更新描述"
+                         Margin="5"
+                         TitleForeground="{StaticResource BaseForeground}"
+                         TitleWidth="80">
+            <TextBox Text="{Binding Entity.UpdateDescription,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                     Width="260" VerticalContentAlignment="Top" Height="200" TextWrapping="Wrap"/>
+        </vc:TitleContent>
+        <vc:TitleContent Title="文件路径"
+                         Margin="5"
+                         TitleForeground="{StaticResource BaseForeground}"
+                         TitleWidth="80">
+            <StackPanel Orientation="Horizontal">
+                <TextBox Text="{Binding Entity.FilePath,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                         IsReadOnly="True"
+                         Width="205" />
+                <Button Style="{StaticResource ButtonSuccess}"
+                        Height="35"
+                        Width="50"
+                        Command="{Binding SelectFileSavePathCommand}"
+                        Margin="5,0"
+                        Cursor="Hand">
+                    <Path x:Name="content"
+                          Width="20"
+                          Height="20"
+                          Data="{StaticResource FolderIcon}"
+                          Fill="Black"
+                          RenderTransformOrigin="0.5,0.5"
+                          Stretch="Fill" />
+                </Button>
+            </StackPanel>
+            
+        </vc:TitleContent>
+        <vc:TitleContent TitleForeground="{StaticResource BaseForeground}"
+                         TitleWidth="80"
+                         Margin="5">
+            <CheckBox Content="是否强制更新"
+                      IsChecked="{Binding Entity.IsForcedUpdate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      Height="30"
+                      Foreground="{StaticResource BaseForeground}" />
+        </vc:TitleContent>
+    </StackPanel>
+    <VUc:AddOrEditUcViewBase.BottomBtnItems>
+        <Button Content="保存"
+                Style="{StaticResource ButtonSuccess}"
+                Command="{Binding SaveCommand}"
+                Margin="5,0" />
+    </VUc:AddOrEditUcViewBase.BottomBtnItems>
+</VUc:AddOrEditUcViewBase>

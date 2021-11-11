@@ -32,5 +32,15 @@ namespace Vampirewal.Service.Model
         /// 新增新的文件信息页面
         /// </summary>
         public static string AddNewFileView = $"{ViewBase}.AddNewFileView";
+
+        /// <summary>
+        /// 程序信息页面
+        /// </summary>
+        public static string ProgramInfoView = $"{ViewBase}.ProgramInfoView";
+
+        /// <summary>
+        /// 新增程序更新信息页面
+        /// </summary>
+        public static string AddNewProgramDtlView = $"{ViewBase}.AddNewProgramDtlView";
     }
 }

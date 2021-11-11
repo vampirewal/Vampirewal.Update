@@ -43,6 +43,8 @@ namespace Vampirewal.Service.DataAccess
 
         public DbSet<ProgramModel> ProgramModels { get; set; }
 
+        public DbSet<ProgramDtl> ProgramDtls { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);

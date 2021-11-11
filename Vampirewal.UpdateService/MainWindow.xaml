@@ -111,34 +111,35 @@
                                         Binding="{Binding Name}"
                                         IsReadOnly="True"
                                         Width="1*" />
-                    <DataGridTextColumn Header="描述"
+                    <!--<DataGridTextColumn Header="描述"
                                         Binding="{Binding Description}"
                                         IsReadOnly="True"
-                                        Width="1*" />
-
-                    <DataGridTemplateColumn Header="更新描述"
+                                        Width="1*" />-->
+                    <DataGridTemplateColumn Header="描述"
                                             Width="1*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding UpdateDescription}"
-                                           ToolTip="{Binding UpdateDescription}" />
+                                <TextBlock Text="{Binding Description}"
+                                           ToolTip="{Binding Description}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
-                    <DataGridTextColumn Header="版本"
-                                        Binding="{Binding Version}"
+                    <DataGridTextColumn Header="当前版本"
+                                        Binding="{Binding LatestVersion}"
                                         IsReadOnly="True"
                                         Width="0.5*" />
 
-                    <DataGridCheckBoxColumn Header="是否强制更新" IsReadOnly="True"
-                                            Width="0.8*" 
-                                            Binding="{Binding IsForcedUpdate}" />
+                    
 
                     <DataGridTemplateColumn Header="操作" Width="1*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
+                                    <Button Style="{StaticResource ButtonSuccess}"
+                                            Content="查看"
+                                            Command="{Binding DataContext.LookDetailedCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type VWin:MainWindowBase}}}"
+                                            CommandParameter="{Binding}"/>
                                     <Button Style="{StaticResource ButtonDanger}"
                                             Content="删除" />
                                 </StackPanel>

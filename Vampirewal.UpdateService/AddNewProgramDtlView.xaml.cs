@@ -17,11 +17,11 @@ using Vampirewal.Core.WpfTheme.UcView;
 namespace Vampirewal.UpdateService
 {
     /// <summary>
-    /// AddNewFileView.xaml 的交互逻辑
+    /// AddNewProgramDtlView.xaml 的交互逻辑
     /// </summary>
-    public partial class AddNewFileView : AddOrEditUcViewBase
+    public partial class AddNewProgramDtlView : AddOrEditUcViewBase
     {
-        public AddNewFileView()
+        public AddNewProgramDtlView()
         {
             InitializeComponent();
         }

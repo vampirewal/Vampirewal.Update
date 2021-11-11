@@ -13,6 +13,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -27,14 +28,14 @@ namespace Vampirewal.Service.Model
         private string token = "";
         private string name = "";
         private string description = "";
-        private string updateDescription = "";
-        private string zipFilePath = "";
-        private string version = "1.0.0.0";
-        private bool isForcedUpdate = false;
+        
+        //private string zipFilePath = "";
+        private string _LastestVersion = "1.0.0.0";
+        
 
         public ProgramModel()
         {
-
+            ProgramDtls = new ObservableCollection<ProgramDtl>();
         }
 
         /// <summary>
@@ -49,18 +50,52 @@ namespace Vampirewal.Service.Model
         /// 描述
         /// </summary>
         public string Description { get => description; set { description = value; DoNotify(); } }
+        
+        ///// <summary>
+        ///// 文件在服务器的地址
+        ///// </summary>
+        //public string ZipFilePath { get => zipFilePath; set { zipFilePath = value; DoNotify(); } }
+        /// <summary>
+        /// 版本
+        /// </summary>
+        public string LatestVersion { get => _LastestVersion; set { _LastestVersion = value; DoNotify(); } }
+
+        private ObservableCollection<ProgramDtl> _ProgramDtls;
+        [NotMapped]
+        public ObservableCollection<ProgramDtl> ProgramDtls
+        {
+            get { return _ProgramDtls; }
+            set { _ProgramDtls = value; DoNotify(); }
+        }
+
+
+    }
+
+    [Table("ProgramDtl_Service")]
+    public class ProgramDtl : TopBaseModel
+    {
+        /// <summary>
+        /// 程序modelId
+        /// </summary>
+        public string ProgramId { get; set; } = "";
+
+        /// <summary>
+        /// 当前版本
+        /// </summary>
+        public string CurrentVersion { get; set; } = "";
+
+        private string updateDescription = "";
         /// <summary>
         /// 更新描述
         /// </summary>
         public string UpdateDescription { get => updateDescription; set { updateDescription = value; DoNotify(); } }
+
         /// <summary>
-        /// 文件在服务器的地址
+        /// 更新文件路径
         /// </summary>
-        public string ZipFilePath { get => zipFilePath; set { zipFilePath = value; DoNotify(); } }
-        /// <summary>
-        /// 版本
-        /// </summary>
-        public string Version { get => version; set { version = value; DoNotify(); } }
+        public string FilePath { get; set; } = "";
+
+        private bool isForcedUpdate = false;
         /// <summary>
         /// 是否强制更新
         /// </summary>
