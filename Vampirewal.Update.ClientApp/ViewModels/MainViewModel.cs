@@ -21,20 +21,24 @@ using System.Text;
 using System.Threading.Tasks;
 using Vampirewal.Core.Interface;
 using Vampirewal.Core.SimpleMVVM;
-using ICSharpCode.SharpZipLib.Zip;
 using System.IO;
 using Vampirewal.Core;
+using ICSharpCode.SharpZipLib.Zip;
+using ICSharpCode.SharpZipLib.GZip;
+using ICSharpCode.SharpZipLib.Checksum;
+using ICSharpCode.SharpZipLib.Tar;
+using System.Windows.Forms;
 
 namespace Vampirewal.Update.ClientApp.ViewModels
 {
-    public class MainViewModel:ViewModelBase
+    public class MainViewModel : ViewModelBase
     {
-        public MainViewModel(IAppConfig config):base(config)
+        public MainViewModel(IAppConfig config) : base(config)
         {
             //构造函数
             config.LoadAppConfig();
             Title = Config.UpdateSetting.UpdateName;
-            
+
 
 
             if (string.IsNullOrEmpty(Title))
@@ -201,13 +205,16 @@ namespace Vampirewal.Update.ClientApp.ViewModels
 
                 //Decompress(urlFileInfo.SaveFullPath, AppDomain.CurrentDomain.BaseDirectory);
 
-                (new FastZip()).ExtractZip(urlFileInfo.SaveFullPath, AppDomain.CurrentDomain.BaseDirectory, "");
+                //(new FastZip()).ExtractZip(urlFileInfo.SaveFullPath, AppDomain.CurrentDomain.BaseDirectory, "");
+                //UnZipFile.UnZip(urlFileInfo.SaveFullPath, AppDomain.CurrentDomain.BaseDirectory);
+
+                System.IO.Compression.ZipFile.ExtractToDirectory(urlFileInfo.SaveFullPath, AppDomain.CurrentDomain.BaseDirectory,Encoding.UTF8); //解压
 
                 File.Delete(urlFileInfo.SaveFullPath);
 
                 Config.AppVersion = this.ServerVersion;
                 Config.Save();
-               
+
             };
             //声明配置
             var config = new FileClientConfig();
@@ -329,11 +336,176 @@ namespace Vampirewal.Update.ClientApp.ViewModels
         #endregion
 
         #region 命令
-        public RelayCommand UpdateCommand => new RelayCommand(() => 
+        public RelayCommand UpdateCommand => new RelayCommand(() =>
         {
             byte[] decBytes = System.Text.Encoding.UTF8.GetBytes($"LoadServerVersion-{Config.UpdateSetting.AppToken}");
             fileClient.Send(decBytes);
         });
+
+
+        public RelayCommand yasuoCommand => new RelayCommand(() => 
+        {
+            FolderBrowserDialog fb= new FolderBrowserDialog();
+            //fb.ShowDialog();
+            if (fb.ShowDialog()==DialogResult.OK)
+            {
+                System.IO.Compression.ZipFile.CreateFromDirectory(fb.SelectedPath, $"{AppDomain.CurrentDomain.BaseDirectory}test.zip", System.IO.Compression.CompressionLevel.Fastest,false,Encoding.UTF8); //压缩
+            }
+        });
         #endregion
+    }
+
+    /// <summary>
+    /// 压缩文件
+    /// </summary>
+    public class ZipHelp
+    {
+        public string ZipName { get; set; }
+        /// <summary>
+        /// 压缩文件夹
+        /// </summary>
+        /// <param name="zipSourcePath">需要压缩的文件夹路径（全路径）</param>
+        /// <param name="zipToFilePath">压缩后保存的路径且必须带后缀名如：D:\\aa.zip（如果为空字符则默认保存到同级文件夹名称为源文件名）</param>
+        public void ZipFileMain(string zipSourcePath, string zipToFilePath)
+        {
+            string[] filenames = Directory.GetFiles(zipSourcePath);
+            ZipName = zipSourcePath.Substring(zipSourcePath.LastIndexOf("\\") + 1);
+            //定义压缩更目录对象
+            Crc32 crc = new Crc32();
+            ZipOutputStream s = new ZipOutputStream(File.Create(zipToFilePath.Equals("") ? zipSourcePath + ".zip" : zipToFilePath));
+
+            s.SetLevel(6); // 设置压缩级别
+            //递归压缩文件夹下的所有文件和字文件夹
+            AddDirToDir(crc, s, zipSourcePath);
+
+            s.Finish();
+            s.Close();
+        }
+        /// <summary>
+        /// 压缩单个文件
+        /// </summary>
+        /// <param name="zipSourcePath">需要压缩的文件路径(全路径)</param>
+        /// <param name="zipToFilePath">压缩后保存的文件路径（如果是空字符则默认压缩到同目录下文件名为源文件名）</param>
+        public void ZipByFile(string zipSourcePath, string zipToFilePath)
+        {
+            //定义压缩更目录对象
+            Crc32 crc = new Crc32();
+            string dirName = zipSourcePath.Substring(zipSourcePath.LastIndexOf("\\") + 1, zipSourcePath.LastIndexOf(".") - (zipSourcePath.LastIndexOf("\\") + 1)) + ".zip";
+            ZipOutputStream s = new ZipOutputStream(File.Create(zipToFilePath.Equals("") ? zipSourcePath.Substring(0, zipSourcePath.LastIndexOf("\\")) + "\\" + dirName : zipToFilePath));
+            s.SetLevel(6); // 设置压缩级别
+            AddFileToDir(crc, s, zipSourcePath, 0);
+            s.Finish();
+            s.Close();
+        }
+        /// <summary>
+        /// 压缩单个文件到指定压缩文件夹下(内部调用)
+        /// </summary>
+        /// <param name="crc"></param>
+        /// <param name="s"></param>
+        /// <param name="file">文件路径</param>
+        public void AddFileToDir(Crc32 crc, ZipOutputStream s, string file, int dotype)
+        {
+            FileStream fs = File.OpenRead(file);
+            byte[] buffer = new byte[fs.Length];
+            fs.Read(buffer, 0, buffer.Length);
+            string filename = "";
+            if (dotype == 0)
+                filename = file.Substring(file.LastIndexOf("\\") + 1);
+            else
+                filename = file.Substring(file.IndexOf(ZipName));
+            ZipEntry entry = new ZipEntry(filename);
+            entry.DateTime = DateTime.Now;
+            entry.Size = fs.Length;
+            fs.Close();
+            crc.Reset();
+            crc.Update(buffer);
+            entry.Crc = crc.Value;
+            s.PutNextEntry(entry);
+            s.Write(buffer, 0, buffer.Length);
+        }
+        /// <summary>
+        /// 递归文件夹层级（内部调用）
+        /// </summary>
+        /// <param name="crc"></param>
+        /// <param name="s"></param>
+        /// <param name="file"></param>
+        public void AddDirToDir(Crc32 crc, ZipOutputStream s, string file)
+        {
+            //添加此文件夹下的文件
+            string[] files = Directory.GetFiles(file);
+            foreach (string i in files)
+            {
+                AddFileToDir(crc, s, i, 1);
+            }
+            //查询此文件夹下的子文件夹
+            string[] dirs = Directory.GetDirectories(file);
+            foreach (string i in dirs)
+            {
+                AddDirToDir(crc, s, i);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 解压文件
+    /// </summary>
+    public class UnZipFile
+    {
+        /// <summary>
+        /// 解压文件方法
+        /// </summary>
+        /// <param name="UnSourceZip">源文件</param>
+        /// <param name="UnZipToPath">解压到目录路径（如果为空字符则是解压到当前目录）</param>
+        public static void UnZip(string UnSourceZip, string UnZipToPath)
+        {
+            //System.Text.Encoding encode = System.Text.Encoding.GetEncoding("gbk");
+            //ZipStrings.CodePage = encode.CodePage;
+
+            ZipInputStream s = new ZipInputStream(File.OpenRead(UnSourceZip));
+
+            ZipEntry theEntry;
+            while ((theEntry = s.GetNextEntry()) != null)
+            {
+
+                string fileName = Path.GetFileName(theEntry.Name);
+
+                //生成解压目录
+                if (!UnZipToPath.Equals(""))
+                    Directory.CreateDirectory(UnZipToPath);
+                else
+                    UnZipToPath = UnSourceZip.Substring(0, UnSourceZip.LastIndexOf("\\") > 0 ? UnSourceZip.LastIndexOf("\\") : 0);
+                if (fileName != String.Empty)
+                {
+                    //创建文件夹
+                    int startIndex = 0;
+                    while (theEntry.Name.IndexOf("/", startIndex) > 0)
+                    {
+                        //计算文件夹路径
+                        string dirpath = theEntry.Name.Substring(0, theEntry.Name.IndexOf("/", startIndex));
+                        //添加文件夹
+                        Directory.CreateDirectory(UnZipToPath.Equals("") ? dirpath : UnZipToPath + "//" + dirpath);
+                        startIndex = theEntry.Name.IndexOf("/", startIndex) + 1;
+                    }
+                    //解压文件到指定的目录
+                    FileStream streamWriter = File.Create(UnZipToPath.Equals("") ? theEntry.Name : UnZipToPath + "//" + theEntry.Name);
+                    int size = 2048;
+                    byte[] data = new byte[2048];
+                    while (true)
+                    {
+                        size = s.Read(data, 0, data.Length);
+                        if (size > 0)
+                        {
+                            streamWriter.Write(data, 0, size);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    streamWriter.Close();
+                }
+            }
+            s.Close();
+        }
     }
 }
