@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Vampirelwal.Common;
 using Vampirewal.Core;
 using Vampirewal.Core.Interface;
 using Vampirewal.Core.SimpleMVVM;
@@ -129,7 +130,7 @@ namespace Vampirewal.Service.ViewModel
             try
             {
                 fileService.Stop();
-                Console.WriteLine("启动成功");
+                Console.WriteLine("停止成功");
                 IsStartOk = false;
             }
             catch (Exception ex)
@@ -181,6 +182,62 @@ namespace Vampirewal.Service.ViewModel
                 //当客户端通过Send或SendAsync发送数据时，此处会收到，且协议procotol为null。
                 //为性能考虑，并未去除协议头，所以解析数据应当偏移2个字节，长度也应当减少2个字节。
                 string mes = Encoding.UTF8.GetString(byteBlock.Buffer, 2, byteBlock.Len - 2);
+
+                string[] Msgs=mes.Split('-');
+                if (Msgs[0]=="LoadServerVersion")
+                {
+                    string Token = Msgs[1];
+                    var cur = DC.Set<ProgramModel>().Where(w => w.Token == Token).FirstOrDefault();
+                    if (cur != null)
+                    {
+                        sender.SendAsync(Encoding.UTF8.GetBytes($"ServerVersion-{cur.LatestVersion}"));
+                    }
+                    else
+                    {
+                        sender.SendAsync(Encoding.UTF8.GetBytes("Error"));
+                    }
+                }
+
+                if (Msgs[0]=="DownloadServerFile")
+                {
+                    string Token = Msgs[1];
+                    var cur = DC.Set<ProgramModel>().Where(w => w.Token == Token).FirstOrDefault();
+                    if (cur != null)
+                    {
+                        var dtl=DC.Set<ProgramDtl>().Where(w =>w.ProgramId==cur.ID&&w.CurrentVersion==cur.LatestVersion).FirstOrDefault();
+
+                        sender.SendAsync(Encoding.UTF8.GetBytes($"ServerFilePath-{dtl.FilePath}"));
+                    }
+                    else
+                    {
+                        sender.SendAsync(Encoding.UTF8.GetBytes("Error"));
+                    }
+                }
+
+                if (Msgs[0]=="LoadUpdateDes")
+                {
+                    string Token = Msgs[1];
+                    string ClientVersion=Msgs[2];
+                    var cur = DC.Set<ProgramModel>().Where(w => w.Token == Token).FirstOrDefault();
+                    if (cur != null)
+                    {
+
+                        var dtl = DC.Set<ProgramDtl>().Where(w => w.ProgramId == cur.ID && w.CurrentVersion == cur.LatestVersion).FirstOrDefault();
+                        if (CustomVersion.CheckVersion(dtl.CurrentVersion, ClientVersion))
+                        {
+                            sender.SendAsync(Encoding.UTF8.GetBytes($"ServerUpdateDes-{dtl.UpdateDescription}"));
+                        }
+                        else
+                        {
+                            sender.SendAsync(Encoding.UTF8.GetBytes($"ServerUpdateDes-当前版本无更新！"));
+                        }
+                        
+                    }
+                    else
+                    {
+                        sender.SendAsync(Encoding.UTF8.GetBytes("Error"));
+                    }
+                }
             };
 
             fileService.BeforeFileTransfer += (object sender, FileOperationEventArgs e) =>

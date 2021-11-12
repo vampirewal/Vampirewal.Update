@@ -4,17 +4,13 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-	  <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="HandyControl" Version="3.2.0" />
     <PackageReference Include="RRQMSocket.FileTransfer" Version="5.7.1" />
+    <PackageReference Include="SharpZipLib" Version="1.3.3" />
     <PackageReference Include="Vampirewal.Core" Version="1.0.1.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Vampirelwal.Common\Vampirelwal.Common.csproj" />
-    <ProjectReference Include="..\Vampirewal.Service.Model\Vampirewal.Service.Model.csproj" />
   </ItemGroup>
 
 </Project>

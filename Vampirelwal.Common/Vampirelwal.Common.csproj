@@ -6,8 +6,4 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Vampirewal.Core" Version="1.0.1.2" />
-  </ItemGroup>
-
 </Project>

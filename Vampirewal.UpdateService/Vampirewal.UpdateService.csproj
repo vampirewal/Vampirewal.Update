@@ -14,7 +14,7 @@
   <ItemGroup>
     <PackageReference Include="HandyControl" Version="3.2.0" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.37" />
-    <PackageReference Include="Vampirewal.Core" Version="1.0.0.48" />
+    <PackageReference Include="Vampirewal.Core" Version="1.0.1.2" />
   </ItemGroup>
 
   <ItemGroup>

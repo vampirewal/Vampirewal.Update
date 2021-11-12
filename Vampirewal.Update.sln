@@ -9,11 +9,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{0691
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{B4751C8B-356E-4446-8948-54D0AD750BDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vampirewal.Service.ViewModel", "Vampirewal.Service.ViewModel\Vampirewal.Service.ViewModel.csproj", "{415B026D-FF86-4224-B4A2-E55A5BF7D1FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vampirewal.Service.ViewModel", "Vampirewal.Service.ViewModel\Vampirewal.Service.ViewModel.csproj", "{415B026D-FF86-4224-B4A2-E55A5BF7D1FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vampirewal.Service.Model", "Vampirewal.Service.Model\Vampirewal.Service.Model.csproj", "{D859783E-425E-4778-91E6-E06A14164422}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vampirewal.Service.Model", "Vampirewal.Service.Model\Vampirewal.Service.Model.csproj", "{D859783E-425E-4778-91E6-E06A14164422}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vampirewal.Service.DataAccess", "Vampirewal.Service.DataAccess\Vampirewal.Service.DataAccess.csproj", "{0E2F2674-1D85-4D40-BAC3-50AF0455DFFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vampirewal.Service.DataAccess", "Vampirewal.Service.DataAccess\Vampirewal.Service.DataAccess.csproj", "{0E2F2674-1D85-4D40-BAC3-50AF0455DFFA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{24135033-0FB2-4EEF-B0D3-61EE1219C3E0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{F7AB73A7-D201-4C5C-B92F-FD29AE7CB235}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{450BF5C4-81F8-4436-A209-8EE0FE955402}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vampirelwal.Common", "Vampirelwal.Common\Vampirelwal.Common.csproj", "{4B212D6A-B88E-4FBD-AA73-589B5B47CA3B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Wpf.Client", "Test.Wpf.Client\Test.Wpf.Client.csproj", "{46527DC8-452D-4B7F-B87D-C48FA1A0BF29}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vampirewal.Update.ClientApp", "Vampirewal.Update.ClientApp\Vampirewal.Update.ClientApp.csproj", "{FC72B89C-207F-4298-B722-5F1DD84C7B94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +49,22 @@ Global
 		{0E2F2674-1D85-4D40-BAC3-50AF0455DFFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E2F2674-1D85-4D40-BAC3-50AF0455DFFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E2F2674-1D85-4D40-BAC3-50AF0455DFFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7AB73A7-D201-4C5C-B92F-FD29AE7CB235}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7AB73A7-D201-4C5C-B92F-FD29AE7CB235}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7AB73A7-D201-4C5C-B92F-FD29AE7CB235}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7AB73A7-D201-4C5C-B92F-FD29AE7CB235}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B212D6A-B88E-4FBD-AA73-589B5B47CA3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B212D6A-B88E-4FBD-AA73-589B5B47CA3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B212D6A-B88E-4FBD-AA73-589B5B47CA3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B212D6A-B88E-4FBD-AA73-589B5B47CA3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46527DC8-452D-4B7F-B87D-C48FA1A0BF29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46527DC8-452D-4B7F-B87D-C48FA1A0BF29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46527DC8-452D-4B7F-B87D-C48FA1A0BF29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46527DC8-452D-4B7F-B87D-C48FA1A0BF29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC72B89C-207F-4298-B722-5F1DD84C7B94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC72B89C-207F-4298-B722-5F1DD84C7B94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC72B89C-207F-4298-B722-5F1DD84C7B94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC72B89C-207F-4298-B722-5F1DD84C7B94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +74,10 @@ Global
 		{415B026D-FF86-4224-B4A2-E55A5BF7D1FA} = {0691BA37-46B5-426F-B9A9-250788BBE9B1}
 		{D859783E-425E-4778-91E6-E06A14164422} = {0691BA37-46B5-426F-B9A9-250788BBE9B1}
 		{0E2F2674-1D85-4D40-BAC3-50AF0455DFFA} = {0691BA37-46B5-426F-B9A9-250788BBE9B1}
+		{F7AB73A7-D201-4C5C-B92F-FD29AE7CB235} = {24135033-0FB2-4EEF-B0D3-61EE1219C3E0}
+		{4B212D6A-B88E-4FBD-AA73-589B5B47CA3B} = {450BF5C4-81F8-4436-A209-8EE0FE955402}
+		{46527DC8-452D-4B7F-B87D-C48FA1A0BF29} = {24135033-0FB2-4EEF-B0D3-61EE1219C3E0}
+		{FC72B89C-207F-4298-B722-5F1DD84C7B94} = {B4751C8B-356E-4446-8948-54D0AD750BDA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {496B4239-B133-498C-8442-97665E46EFCC}

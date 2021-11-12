@@ -1,0 +1,35 @@
+﻿<vampire:VampirewalApplication x:Class="Vampirewal.Update.ClientApp.App"
+                               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                               xmlns:vampire="Vampirewal.SimpleMVVM"
+                               xmlns:local="clr-namespace:Vampirewal.Update.ClientApp"
+                               ShutdownMode="OnLastWindowClose">
+    <vampire:VampirewalApplication.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <local:ViewModelLocator x:Key="Locator" />
+                </ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/Vampirewal.Core;component/WpfTheme/CoreTheme.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml" />
+                <ResourceDictionary>
+                    <SolidColorBrush x:Key="BaseBackground"
+                                     Color="#2F3437" />
+                    <SolidColorBrush x:Key="BaseBackground2"
+                                     Color="#EB5757" />
+                    <SolidColorBrush x:Key="BaseBackground3"
+                                     Color="#373C3F" />
+                    <SolidColorBrush x:Key="BaseForeground"
+                                     Color="#EBEBEB" />
+                    <SolidColorBrush x:Key="DefaultButtonColor"
+                                     Color="#474C50" />
+                    <SolidColorBrush x:Key="BtnMouseOverForegroundColor"
+                                     Color="#E2E3E3" />
+                    <SolidColorBrush x:Key="ToolTipBackground"
+                                     Color="#3F4447" />
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </vampire:VampirewalApplication.Resources>
+</vampire:VampirewalApplication>

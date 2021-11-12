@@ -1,0 +1,52 @@
+﻿<win:WindowBase x:Class="Vampirewal.Update.ClientApp.MainWindow"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:win="Vampirewal.Windows"
+                xmlns:local="clr-namespace:Vampirewal.Update.ClientApp"
+                mc:Ignorable="d"
+                DataContext="{Binding Source={StaticResource Locator},Path=MainViewModel}"
+                Height="450"
+                Background="#2F3437"
+                Title="{Binding Title}"
+                Foreground="#EBEBEB"
+                IsOpenWindowSize="False"
+                IsShowMaxButton="False"
+                IsShowMinButton="False"
+                Width="800">
+    <Grid>
+        <!--<Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>-->
+        <Border Background="{StaticResource BaseForeground}"
+                CornerRadius="5"
+                Margin="5">
+            <TextBox x:Name="UpdateDes"
+                     TextWrapping="Wrap"
+                     Background="Transparent"
+                     Text="{Binding UpdateDes}"
+                     VerticalContentAlignment="Top"
+                     IsReadOnly="True" />
+        </Border>
+    </Grid>
+    <win:WindowBase.BottomCustomAreas>
+        <Grid Width="785"
+              Margin="0,0,0,5">
+            <TextBlock HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Text="{Binding UpdateStateStr}"
+                       Foreground="{StaticResource BaseForeground}"
+                       x:Name="UpdateState" />
+            <StackPanel HorizontalAlignment="Right">
+                <Button Content="开始更新"
+                        Style="{StaticResource ButtonSuccess}"
+                        Visibility="{Binding IsCanUpdate,Converter={StaticResource Boolean2VisibilityConverter}}"
+                        x:Name="StartUpdate"
+                        Command="{Binding UpdateCommand}" 
+                         />
+            </StackPanel>
+        </Grid>
+    </win:WindowBase.BottomCustomAreas>
+</win:WindowBase>
