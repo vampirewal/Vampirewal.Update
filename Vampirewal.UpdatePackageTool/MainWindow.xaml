@@ -1,0 +1,40 @@
+﻿<VWin:MainWindowBase x:Class="Vampirewal.UpdatePackageTool.MainWindow"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:VWin="Vampirewal.Windows"
+                     xmlns:local="clr-namespace:Vampirewal.UpdatePackageTool"
+                     xmlns:vc="Vampirewal.CustomControl"
+                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+                     mc:Ignorable="d"
+                     DataContext="{Binding Source={StaticResource Locator},Path=MainViewModel}"
+                     Title="{Binding Title}"
+                     Height="450"
+                     Background="#2F3437"
+                     Foreground="#EBEBEB"
+                     LeftMenuMaxWidth="260"
+                     IsOpenWindowSize="True"
+                     Width="800">
+    <VWin:MainWindowBase.LeftContent>
+        <ScrollViewer>
+            <StackPanel Margin="0,5">
+                <vc:TitleContent Title="AppToken"
+                                 TitleForeground="{StaticResource BaseForeground}"
+                                 TitleWidth="80">
+                    <TextBox Width="150"
+                             Text="{Binding Config.UpdateSetting.AppToken,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="TextChanged">
+                                <i:InvokeCommandAction Command="{Binding TextChangedCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=VWin:MainWindowBase}}"
+                                                        />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
+                </vc:TitleContent>
+            </StackPanel>
+        </ScrollViewer>
+        
+    </VWin:MainWindowBase.LeftContent>
+    <Grid></Grid>
+</VWin:MainWindowBase>

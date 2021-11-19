@@ -97,5 +97,46 @@ namespace Vampirelwal.Common
                 return false;
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ServerVersion"></param>
+        /// <returns></returns>
+        public static string CreateNewVersion(string ServerVersion)
+        {
+            //先处理服务器的版本号
+            string[] ServerStrs = ServerVersion.Split('.');
+            int Server1 = Convert.ToInt32(ServerStrs[0]);
+            int Server2 = Convert.ToInt32(ServerStrs[1]);
+            int Server3 = Convert.ToInt32(ServerStrs[2]);
+            int Server4 = Convert.ToInt32(ServerStrs[3]);
+
+
+            if (Server4<100)
+            {
+                Server4++;
+                if (Server4==100)
+                {
+                    Server4 = 1;
+                    Server3++;
+
+                    if (Server3==100)
+                    {
+                        Server3 = 1;
+                        Server2++;
+
+                        if (Server2==100)
+                        {
+                            Server2 = 1;
+                            Server1++;
+                        }
+                    }
+                }
+                
+            }
+
+            return $"{Server1}.{Server2}.{Server3}.{Server4}";
+        }
     }
 }

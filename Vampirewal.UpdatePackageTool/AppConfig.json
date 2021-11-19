@@ -1,0 +1,20 @@
+{
+    "LogLevel": 0,
+    "AppChineseName": "Vampirewal自动更新程序打包上传工具",
+    "AppVersion": "1.0.0.4",
+    "ConnectionStrings": [],
+    "DbType": 0,
+    "EncryptKey": "",
+    "AppSettings": {},
+    "FileUploadOptions": {
+        "SaveFileMode": 0,
+        "UploadDir": "d:\\upload",
+        "UploadLimit": 20971520
+    },
+    "UpdateSetting": {
+        "UpdateName": "",
+        "ServerIp": "192.168.93.128",
+        "ServerPort": "9998",
+        "AppToken": "youjing"
+    }
+}
