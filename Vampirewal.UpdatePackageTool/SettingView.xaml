@@ -1,0 +1,16 @@
+﻿<VUc:AddOrEditUcViewBase x:Class="Vampirewal.UpdatePackageTool.SettingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  xmlns:VUc="Vampirewal.UcView"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Vampirewal.UpdatePackageTool"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <VUc:AddOrEditUcViewBase.BottomBtnItems>
+        <Button Style="{StaticResource ButtonSuccess}" Margin="5,0"
+                Content="保存" />
+    </VUc:AddOrEditUcViewBase.BottomBtnItems>
+    <Grid>
+            
+    </Grid>
+</VUc:AddOrEditUcViewBase>

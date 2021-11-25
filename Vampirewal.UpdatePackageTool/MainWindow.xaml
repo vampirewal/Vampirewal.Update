@@ -22,19 +22,29 @@
                 <vc:TitleContent Title="AppToken"
                                  TitleForeground="{StaticResource BaseForeground}"
                                  TitleWidth="80">
-                    <TextBox Width="150"
-                             Text="{Binding Config.UpdateSetting.AppToken,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
+                    <TextBox Width="150" Name="aa"
+                             Text="{Binding Config.UpdateSetting.AppToken,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="TextChanged">
-                                <i:InvokeCommandAction Command="{Binding TextChangedCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=VWin:MainWindowBase}}"
-                                                        />
+                                <i:InvokeCommandAction Command="{Binding TextChangedCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
+                </vc:TitleContent>
+                <vc:TitleContent Title="AppToken"
+                                 TitleForeground="{StaticResource BaseForeground}"
+                                 TitleWidth="80">
+                    <TextBox Width="150"
+                             Text="{Binding Config.UpdateSetting.ServerIp,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="TextChanged">
+                                <i:InvokeCommandAction Command="{Binding TextChangedCommand}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </TextBox>
                 </vc:TitleContent>
             </StackPanel>
         </ScrollViewer>
-        
     </VWin:MainWindowBase.LeftContent>
     <Grid></Grid>
 </VWin:MainWindowBase>
