@@ -9,6 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="AppConfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="AppConfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="HandyControl" Version="3.2.0" />
     <PackageReference Include="RRQMSocket.FileTransfer" Version="5.7.1" />
     <PackageReference Include="SharpZipLib" Version="1.3.3" />

@@ -174,10 +174,14 @@ namespace Vampirewal.Update.ClientApp.ViewModels
                     if (strs[1] == "当前版本无更新！")
                     {
                         IsCanUpdate = false;
+
+                        UpdateCommand.RaiseCanExecuteChanged();
                     }
                     else
                     {
                         IsCanUpdate = true;
+
+                        UpdateCommand.RaiseCanExecuteChanged();
                     }
 
                 }
@@ -208,7 +212,7 @@ namespace Vampirewal.Update.ClientApp.ViewModels
                 //(new FastZip()).ExtractZip(urlFileInfo.SaveFullPath, AppDomain.CurrentDomain.BaseDirectory, "");
                 //UnZipFile.UnZip(urlFileInfo.SaveFullPath, AppDomain.CurrentDomain.BaseDirectory);
 
-                System.IO.Compression.ZipFile.ExtractToDirectory(urlFileInfo.SaveFullPath, AppDomain.CurrentDomain.BaseDirectory,Encoding.UTF8); //解压
+                System.IO.Compression.ZipFile.ExtractToDirectory(urlFileInfo.SaveFullPath, AppDomain.CurrentDomain.BaseDirectory, Encoding.UTF8); //解压
 
                 File.Delete(urlFileInfo.SaveFullPath);
 
@@ -336,20 +340,23 @@ namespace Vampirewal.Update.ClientApp.ViewModels
         #endregion
 
         #region 命令
-        public RelayCommand UpdateCommand => new RelayCommand(() =>
+        public RelayCommand<string> UpdateCommand => new RelayCommand<string>((s) =>
         {
-            byte[] decBytes = System.Text.Encoding.UTF8.GetBytes($"LoadServerVersion-{Config.UpdateSetting.AppToken}");
+            byte[] decBytes = System.Text.Encoding.UTF8.GetBytes($"DownloadServerFile-{Config.UpdateSetting.AppToken}");
             fileClient.Send(decBytes);
+        }, (c) =>
+        {
+            return IsCanUpdate;
         });
 
 
-        public RelayCommand yasuoCommand => new RelayCommand(() => 
+        public RelayCommand yasuoCommand => new RelayCommand(() =>
         {
-            FolderBrowserDialog fb= new FolderBrowserDialog();
+            FolderBrowserDialog fb = new FolderBrowserDialog();
             //fb.ShowDialog();
-            if (fb.ShowDialog()==DialogResult.OK)
+            if (fb.ShowDialog() == DialogResult.OK)
             {
-                System.IO.Compression.ZipFile.CreateFromDirectory(fb.SelectedPath, $"{AppDomain.CurrentDomain.BaseDirectory}test.zip", System.IO.Compression.CompressionLevel.Fastest,false,Encoding.UTF8); //压缩
+                System.IO.Compression.ZipFile.CreateFromDirectory(fb.SelectedPath, $"{AppDomain.CurrentDomain.BaseDirectory}test.zip", System.IO.Compression.CompressionLevel.Fastest, false, Encoding.UTF8); //压缩
             }
         });
         #endregion

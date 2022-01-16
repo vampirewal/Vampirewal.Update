@@ -1,0 +1,32 @@
+{
+    "LogLevel": 0,
+    "AppChineseName": "Vampirewal更新程序（服务端）",
+    "AppVersion": "1.0.0.0",
+    "ConnectionStrings": [
+        {
+            "Key": "defulat",
+            "Value": "Data Source=ServiceDB.db",
+            "DbType": 4,
+            "Version": "1.0",
+            "DbContext": "ServiceDataContext"
+        }
+    ],
+    "DbType": 0,
+    "EncryptKey": "",
+    "AppSettings": {
+        "ServerIp": "127.0.0.1",
+        "ServerPort1": "9999",
+        "ServerPort2": "9998"
+    },
+    "FileUploadOptions": {
+        "SaveFileMode": 0,
+        "UploadDir": "d:\\upload",
+        "UploadLimit": 20971520
+    },
+    "UpdateSetting": {
+        "UpdateName": "XX",
+        "ServerIp": "127.0.0.1",
+        "ServerPort": "1234",
+        "AppToken": "aaaa"
+    }
+}

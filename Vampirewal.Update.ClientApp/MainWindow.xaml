@@ -39,14 +39,14 @@
                        Text="{Binding UpdateStateStr}"
                        Foreground="{StaticResource BaseForeground}"
                        x:Name="UpdateState" />
-            <StackPanel HorizontalAlignment="Right">
-                <Button Content="压缩文件"
-                        Command="{Binding yasuoCommand}"/>
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <!--<Button Content="压缩文件"
+                        Command="{Binding yasuoCommand}"/>-->
                 <Button Content="开始更新"
                         Style="{StaticResource ButtonSuccess}"
                         Visibility="{Binding IsCanUpdate,Converter={StaticResource Boolean2VisibilityConverter}}"
                         x:Name="StartUpdate"
-                        Command="{Binding UpdateCommand}" 
+                        Command="{Binding UpdateCommand}"  CommandParameter="123"
                          />
             </StackPanel>
         </Grid>
