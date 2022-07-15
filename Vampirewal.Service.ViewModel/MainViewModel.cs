@@ -59,7 +59,7 @@ namespace Vampirewal.Service.ViewModel
         private void GetProgramsData()
         {
             Programs.Clear();
-            var current = DC.Set<ProgramModel>().OrderByDescending(o => o.CreateTime).ToList();
+            var current = DC.Client.Queryable<ProgramModel>().OrderBy(o => o.CreateTime).ToList();
             foreach (var item in current)
             {
                 Programs.Add(item);
@@ -187,7 +187,7 @@ namespace Vampirewal.Service.ViewModel
                 if (Msgs[0]=="LoadServerVersion")
                 {
                     string Token = Msgs[1];
-                    var cur = DC.Set<ProgramModel>().Where(w => w.Token == Token).FirstOrDefault();
+                    var cur = DC.Client.Queryable<ProgramModel>().Where(w => w.Token == Token).First();
                     if (cur != null)
                     {
                         sender.SendAsync(Encoding.UTF8.GetBytes($"ServerVersion-{cur.LatestVersion}"));
@@ -201,10 +201,10 @@ namespace Vampirewal.Service.ViewModel
                 if (Msgs[0]=="DownloadServerFile")
                 {
                     string Token = Msgs[1];
-                    var cur = DC.Set<ProgramModel>().Where(w => w.Token == Token).FirstOrDefault();
+                    var cur = DC.Client.Queryable<ProgramModel>().Where(w => w.Token == Token).First();
                     if (cur != null)
                     {
-                        var dtl=DC.Set<ProgramDtl>().Where(w =>w.ProgramId==cur.ID&&w.CurrentVersion==cur.LatestVersion).FirstOrDefault();
+                        var dtl=DC.Client.Queryable<ProgramDtl>().Where(w =>w.ProgramId==cur.BillId&&w.CurrentVersion==cur.LatestVersion).First();
 
                         sender.SendAsync(Encoding.UTF8.GetBytes($"ServerFilePath-{dtl.FilePath}"));
                     }
@@ -218,11 +218,11 @@ namespace Vampirewal.Service.ViewModel
                 {
                     string Token = Msgs[1];
                     string ClientVersion=Msgs[2];
-                    var cur = DC.Set<ProgramModel>().Where(w => w.Token == Token).FirstOrDefault();
+                    var cur = DC.Client.Queryable<ProgramModel>().Where(w => w.Token == Token).First();
                     if (cur != null)
                     {
 
-                        var dtl = DC.Set<ProgramDtl>().Where(w => w.ProgramId == cur.ID && w.CurrentVersion == cur.LatestVersion).FirstOrDefault();
+                        var dtl = DC.Client.Queryable<ProgramDtl>().Where(w => w.ProgramId == cur.BillId && w.CurrentVersion == cur.LatestVersion).First();
                         if (CustomVersion.CheckVersion(dtl.CurrentVersion, ClientVersion))
                         {
                             sender.SendAsync(Encoding.UTF8.GetBytes($"ServerUpdateDes-{dtl.UpdateDescription}"));

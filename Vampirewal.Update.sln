@@ -27,7 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vampirewal.Update.ClientApp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PackaeTool", "PackaeTool", "{07856137-1042-4030-AAA2-C14D624324BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vampirewal.UpdatePackageTool", "Vampirewal.UpdatePackageTool\Vampirewal.UpdatePackageTool.csproj", "{57DA9D41-F00E-41EB-8CB2-93C8014F66FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vampirewal.UpdatePackageTool", "Vampirewal.UpdatePackageTool\Vampirewal.UpdatePackageTool.csproj", "{57DA9D41-F00E-41EB-8CB2-93C8014F66FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vampirewal.Update.Client", "Vampirewal.Update.Client\Vampirewal.Update.Client.csproj", "{6F5C8077-AF65-4D9E-82D1-FA9436B40CB6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,6 +69,10 @@ Global
 		{57DA9D41-F00E-41EB-8CB2-93C8014F66FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57DA9D41-F00E-41EB-8CB2-93C8014F66FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57DA9D41-F00E-41EB-8CB2-93C8014F66FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F5C8077-AF65-4D9E-82D1-FA9436B40CB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F5C8077-AF65-4D9E-82D1-FA9436B40CB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F5C8077-AF65-4D9E-82D1-FA9436B40CB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F5C8077-AF65-4D9E-82D1-FA9436B40CB6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,6 +86,7 @@ Global
 		{4B212D6A-B88E-4FBD-AA73-589B5B47CA3B} = {450BF5C4-81F8-4436-A209-8EE0FE955402}
 		{FC72B89C-207F-4298-B722-5F1DD84C7B94} = {B4751C8B-356E-4446-8948-54D0AD750BDA}
 		{57DA9D41-F00E-41EB-8CB2-93C8014F66FD} = {07856137-1042-4030-AAA2-C14D624324BD}
+		{6F5C8077-AF65-4D9E-82D1-FA9436B40CB6} = {B4751C8B-356E-4446-8948-54D0AD750BDA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {496B4239-B133-498C-8442-97665E46EFCC}

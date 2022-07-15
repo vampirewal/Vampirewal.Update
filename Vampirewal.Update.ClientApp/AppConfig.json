@@ -1,7 +1,7 @@
 {
   "LogLevel": 0,
   "AppChineseName": "更新程序",
-  "AppVersion": "1.0.0.1",
+  "AppVersion": "1.0.0.0", 
   "ConnectionStrings": [],
   "DbType": 0,
   "EncryptKey": "",
@@ -12,9 +12,9 @@
     "UploadLimit": 20971520
   },
   "UpdateSetting": {
-    "UpdateName": "油井液位仪控制程序 更新程序",
-    "ServerIp": "192.168.140.26",
+    "UpdateName": "期遇更新程序",
+    "ServerIp": "124.223.66.212",
     "ServerPort": "9998",
-    "AppToken": "test"
+    "AppToken": "BlindDate"
   }
 }

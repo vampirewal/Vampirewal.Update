@@ -25,14 +25,14 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace Vampirewal.Service.ViewModel
 {
-    public class AddNewProgramDtlViewModel:BaseCRUDVM<ProgramDtl>
+    public class AddNewProgramDtlViewModel : DetailVM<ProgramDtl>
     {
         private IDialogMessage Dialog { get; set; }
-        public AddNewProgramDtlViewModel(IDataContext dc,IDialogMessage dialog):base(dc)
+        public AddNewProgramDtlViewModel(IDataContext dc, IDialogMessage dialog) : base(dc)
         {
             //构造函数
-            Dialog=dialog;
-            
+            Dialog = dialog;
+
 
             Title = "新增更新文件";
         }
@@ -44,11 +44,11 @@ namespace Vampirewal.Service.ViewModel
             if (model != null)
             {
                 programModel = model;
-                Entity.ProgramId = programModel.ID;
+                DtlEntity.ProgramId = programModel.BillId;
             }
         }
 
-        private bool IsOK=false;
+        private bool IsOK = false;
         public override object GetResult()
         {
             return IsOK;
@@ -65,18 +65,18 @@ namespace Vampirewal.Service.ViewModel
         #region 私有方法
         private bool CheckData()
         {
-            if(DC.Set<ProgramDtl>().Any(w=>w.CurrentVersion== Entity.CurrentVersion))
+            if (DC.Client.Queryable<ProgramDtl>().Any(w => w.CurrentVersion == DtlEntity.CurrentVersion && w.ProgramId == DtlEntity.ProgramId))
             {
                 Dialog.ShowPopupWindow("当前版本号和历史记录内重复！", (Window)View, Core.WpfTheme.WindowStyle.MessageType.Error);
                 return false;
             }
             //var OldVersion=DC.Set<ProgramDtl>().Where(w=>w.ProgramId== ProgramModelId).OrderByDescending(o=>o.CreateTime).FirstOrDefault();
 
-            
+
             return true;
         }
 
-        
+
         #endregion
 
         #region 命令
@@ -90,43 +90,43 @@ namespace Vampirewal.Service.ViewModel
             //}
 
             System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
-            ofd.Filter = "RAR文件(*.rar*)|*.rar*|ZIP文件(*.zip)|*.zip*";
+            ofd.Filter = "ZIP文件(*.zip)|*.zip*";
             ofd.RestoreDirectory = true;
             ofd.FilterIndex = 1;
             ofd.Multiselect = false;
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                Entity.FilePath = ofd.FileName;
+                DtlEntity.FilePath = ofd.FileName;
 
             }
         });
 
-        public override RelayCommand SaveCommand => new RelayCommand(() => 
+        public RelayCommand SaveCommand => new RelayCommand(() =>
         {
             if (!CheckData())
             {
                 return;
             }
 
-            using (var trans=DC.Database.BeginTransaction())
+
+            try
             {
-                try
-                {
-                    programModel.LatestVersion = Entity.CurrentVersion;
-                    DC.UpdateEntity(programModel);
+                DC.Client.BeginTran();
+                programModel.LatestVersion = DtlEntity.CurrentVersion;
+                DC.UpdateEntity(programModel);
 
-                    DoAdd();
-                    trans.Commit();
-                    IsOK = true;
+                DoAdd();
+                DC.Client.CommitTran();
+                IsOK = true;
 
-                    ((Window)View).Close();
-                }
-                catch 
-                {
-                    trans.Rollback();
-                    
-                }
+                ((Window)View).Close();
             }
+            catch
+            {
+                DC.Client.RollbackTran();
+
+            }
+
         });
         #endregion
     }

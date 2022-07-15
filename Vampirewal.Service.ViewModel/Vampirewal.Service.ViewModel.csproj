@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="RRQMSocket.FileTransfer" Version="5.7.1" />
-    <PackageReference Include="Vampirewal.Core" Version="1.0.1.3" />
+    <PackageReference Include="Vampirewal.Core" Version="2.0.0.2" />
   </ItemGroup>
 
   <ItemGroup>

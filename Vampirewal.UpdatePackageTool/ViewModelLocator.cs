@@ -23,12 +23,19 @@ using Vampirewal.UpdatePackageTool.ViewModels;
 
 namespace Vampirewal.UpdatePackageTool
 {
-    public class ViewModelLocator:ViewModelLocatorBaseEmpty
+    public class ViewModelLocator:ViewModelLocatorBase
     {
-        public override void InitLocator()
+        public override void InitRegisterService()
         {
             CustomIoC.Instance.Register<IAppConfig, VampirewalConfig>();
+            //CustomIoC.Instance.Register<IDataContext, DataContext>();
+
+            CustomIoC.Instance.Register<ILogger, VampirewalLog>();
             CustomIoC.Instance.Register<IDialogMessage, VampirewalDialog>();
+        }
+
+        public override void InitLocator()
+        {
 
             CustomIoC.Instance.Register<MainViewModel>();
         }

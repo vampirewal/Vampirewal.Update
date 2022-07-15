@@ -17,18 +17,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Vampirewal.Core.Components;
+using Vampirewal.Core.Interface;
+using Vampirewal.Core.IoC;
 using Vampirewal.Core.SimpleMVVM;
 using Vampirewal.Update.ClientApp.ViewModels;
 
 namespace Vampirewal.Update.ClientApp
 {
-    public class ViewModelLocator:ViewModelLocatorBase
+    public class ViewModelLocator:VampirewalViewModelLocator
     {
+        public override void InitRegisterService()
+        {
+            VampirewalIoC.GetInstance().RegisterService<IAppConfig, VampirewalConfig>();
+            //CustomIoC.Instance.Register<IDataContext, ServiceDataContext>();
+
+            //VampirewalIoC.GetInstance().RegisterService<ILogger, VampirewalLog>();
+            VampirewalIoC.GetInstance().RegisterService<IDialogMessage, VampirewalDialog>();
+        }
         public override void InitLocator()
         {
-            CustomIoC.Instance.Register<MainViewModel>();
+            //VampirewalIoC.GetInstance().Register<MainViewModel>();
         }
 
-        public MainViewModel MainViewModel=>CustomIoC.Instance.GetInstance<MainViewModel>();
+        public MainViewModel MainViewModel=> VampirewalIoC.GetInstance().GetInstance<MainViewModel>();
     }
 }

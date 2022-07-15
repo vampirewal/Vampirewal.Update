@@ -28,13 +28,16 @@ using ICSharpCode.SharpZipLib.GZip;
 using ICSharpCode.SharpZipLib.Checksum;
 using ICSharpCode.SharpZipLib.Tar;
 using System.Windows.Forms;
+using Vampirewal.Core.IoC;
 
 namespace Vampirewal.Update.ClientApp.ViewModels
 {
+    [VampirewalIoCRegister("Vampirewal.Update.ClientApp.ViewModels.MainViewModel", RegisterType.ViewModel)]
     public class MainViewModel : ViewModelBase
     {
         public MainViewModel(IAppConfig config) : base(config)
         {
+            config.ConfigPath = AppDomain.CurrentDomain.BaseDirectory;
             //构造函数
             config.LoadAppConfig();
             Title = Config.UpdateSetting.UpdateName;
@@ -64,8 +67,10 @@ namespace Vampirewal.Update.ClientApp.ViewModels
 
             CreateFileClient(Config.UpdateSetting.ServerIp, Config.UpdateSetting.ServerPort, Config.AppVersion, Config.UpdateSetting.AppToken);
 
-            byte[] decBytes = System.Text.Encoding.UTF8.GetBytes($"LoadUpdateDes-{Config.UpdateSetting.AppToken}-{ Config.AppVersion}");
-            fileClient.Send(decBytes);
+            byte[] VersionBytes = System.Text.Encoding.UTF8.GetBytes($"LoadServerVersion-{Config.UpdateSetting.AppToken}-{ Config.AppVersion}");
+            fileClient.Send(VersionBytes);
+
+
         }
 
         #region 属性
@@ -148,8 +153,15 @@ namespace Vampirewal.Update.ClientApp.ViewModels
                     {
                         this.ServerVersion = ServerVersion;
 
-                        byte[] decBytes = System.Text.Encoding.UTF8.GetBytes($"DownloadServerFile-{AppToken}");
-                        fileClient.Send(decBytes);
+                        //byte[] decBytes = System.Text.Encoding.UTF8.GetBytes($"DownloadServerFile-{AppToken}");
+                        //fileClient.Send(decBytes);
+
+                        byte[] descBytes = System.Text.Encoding.UTF8.GetBytes($"LoadUpdateDes-{Config.UpdateSetting.AppToken}-{ Config.AppVersion}");
+                        fileClient.Send(descBytes);
+                    }
+                    else
+                    {
+                        UpdateDes = "当前版本无更新！";
                     }
                 }
 
@@ -205,19 +217,24 @@ namespace Vampirewal.Update.ClientApp.ViewModels
                 //当客户端下载、上传文件完成时，都会经过该事件，且可以通过 e.TransferType进行判断传输类型。
                 UrlFileInfo urlFileInfo = e.UrlFileInfo;//获取传输完成文件信息。
 
-                List<string> FilePath = Utils.GetAllFilePathRecursion(AppDomain.CurrentDomain.BaseDirectory, null);
+                //List<string> FilePath = Utils.GetAllFilePathRecursion(AppDomain.CurrentDomain.BaseDirectory, null);
 
                 //Decompress(urlFileInfo.SaveFullPath, AppDomain.CurrentDomain.BaseDirectory);
 
                 //(new FastZip()).ExtractZip(urlFileInfo.SaveFullPath, AppDomain.CurrentDomain.BaseDirectory, "");
                 //UnZipFile.UnZip(urlFileInfo.SaveFullPath, AppDomain.CurrentDomain.BaseDirectory);
 
-                System.IO.Compression.ZipFile.ExtractToDirectory(urlFileInfo.SaveFullPath, AppDomain.CurrentDomain.BaseDirectory, Encoding.UTF8); //解压
+                System.IO.Compression.ZipFile.ExtractToDirectory(urlFileInfo.SaveFullPath, AppDomain.CurrentDomain.BaseDirectory, Encoding.UTF8, true); //解压
 
                 File.Delete(urlFileInfo.SaveFullPath);
 
                 Config.AppVersion = this.ServerVersion;
                 Config.Save();
+
+                System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    System.Windows.Application.Current.Shutdown();
+                }));
 
             };
             //声明配置

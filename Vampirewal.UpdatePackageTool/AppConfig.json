@@ -11,10 +11,10 @@
         "UploadDir": "d:\\upload",
         "UploadLimit": 20971520
     },
-    "UpdateSetting": {
-        "UpdateName": "",
-        "ServerIp": "192.168.93.128",
-        "ServerPort": "9998",
-        "AppToken": "youjing"
-    }
+  "UpdateSetting": {
+    "UpdateName": "",
+    "ServerIp": "124.223.66.212",
+    "ServerPort": "9998",
+    "AppToken": "youjing"
+  }
 }

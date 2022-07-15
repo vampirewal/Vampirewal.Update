@@ -23,37 +23,33 @@ using Vampirewal.Service.Model;
 
 namespace Vampirewal.Service.ViewModel
 {
-    public class ProgramInfoViewModel:BaseCRUDVM<ProgramModel>
+    public class ProgramInfoViewModel : BillVM<ProgramModel>
     {
         private IDialogMessage Dialog { get; set; }
-        public ProgramInfoViewModel(IDataContext dc,IAppConfig config,IDialogMessage dialog):base(dc,config)
+        public ProgramInfoViewModel(IDataContext dc, IAppConfig config, IDialogMessage dialog) : base(dc, config)
         {
             //构造函数
             Dialog = dialog;
-
-            
-
-            
         }
 
         ProgramModel pass { get; set; }
 
         public override void PassData(object obj)
         {
-            ProgramModel pm=obj as ProgramModel;
+            ProgramModel pm = obj as ProgramModel;
 
             if (pm != null)
             {
                 pass = pm;
                 SetEntity(pass);
                 pass.ProgramDtls.Clear();
-                var programs = DC.Set<ProgramDtl>().Where(w => w.ProgramId == Entity.ID).OrderByDescending(o=>o.CreateTime).ToList();
+                var programs = DC.Client.Queryable<ProgramDtl>().Where(w => w.ProgramId == Entity.BillId).OrderBy(o => o.CreateTime).ToList();
 
                 foreach (var item in programs)
                 {
                     Entity.ProgramDtls.Add(item);
                 }
-                
+
 
                 //GetCurrentProgramDtls();
                 IsCanEdit = false;
@@ -62,18 +58,18 @@ namespace Vampirewal.Service.ViewModel
             }
             else
             {
-                IsCanEdit=true;
+                IsCanEdit = true;
                 Title = $"新增程序信息";
             }
         }
 
-        private bool IsOk=false;
+        private bool IsOk = false;
         public override object GetResult()
         {
             return IsOk;
         }
 
-        
+
 
         #region 属性
         private bool _IsCanEdit;
@@ -81,7 +77,7 @@ namespace Vampirewal.Service.ViewModel
         public bool IsCanEdit
         {
             get { return _IsCanEdit; }
-            set { _IsCanEdit = value;DoNotify(); }
+            set { _IsCanEdit = value; DoNotify(); }
         }
 
         #endregion
@@ -95,7 +91,7 @@ namespace Vampirewal.Service.ViewModel
         {
             Entity.ProgramDtls.Clear();
 
-            var currentlist=DC.Set<ProgramDtl>().Where(w=>w.ProgramId== Entity.ID).OrderByDescending(o=>o.CreateTime).ToList();
+            var currentlist = DC.Client.Queryable<ProgramDtl>().Where(w => w.ProgramId == Entity.BillId).OrderBy(o => o.CreateTime).ToList();
             foreach (var item in currentlist)
             {
                 Entity.ProgramDtls.Add(item);
@@ -107,7 +103,7 @@ namespace Vampirewal.Service.ViewModel
         /// <summary>
         /// 新增更新信息命令
         /// </summary>
-        public RelayCommand AddNewProgramDtlCommand => new RelayCommand(() => 
+        public RelayCommand AddNewProgramDtlCommand => new RelayCommand(() =>
         {
             if (IsCanEdit)
             {
@@ -127,7 +123,7 @@ namespace Vampirewal.Service.ViewModel
 
             if (Convert.ToBoolean(GetResult))
             {
-                
+
                 GetCurrentProgramDtls();
             }
         });
@@ -135,67 +131,68 @@ namespace Vampirewal.Service.ViewModel
         /// <summary>
         /// 删除更新信息命令
         /// </summary>
-        public RelayCommand DeleteProgramDtlCommand => new RelayCommand(() => 
+        public RelayCommand DeleteProgramDtlCommand => new RelayCommand(() =>
         {
-            if (!Entity.ProgramDtls.Any(a=>a.Checked))
+            if (!Entity.ProgramDtls.Any(a => a.Checked))
             {
                 Dialog.ShowPopupWindow("请至少勾选1条信息！", (Window)View, Core.WpfTheme.WindowStyle.MessageType.Error);
                 return;
             }
             else
             {
-                using(var trans = DC.Database.BeginTransaction())
-                {
-                    try
-                    {
-                        foreach (var item in Entity.ProgramDtls.Where(w=>w.Checked).ToList())
-                        {
-                            DC.DeleteEntity(item);
-                            Entity.ProgramDtls.Remove(item);
-                        }
 
-                        if (!Entity.ProgramDtls.Any())
-                        {
-                            Entity.LatestVersion = "1.0.0.0";
-                        }
-                        else
-                        {
-                            var LastProgramDtl=Entity.ProgramDtls.OrderByDescending(o=>o.CreateTime).FirstOrDefault();
-                            Entity.LatestVersion = LastProgramDtl.CurrentVersion;
-                        }
-                        DoEdit(true);
-                        DC.SaveChanges();
-                        trans.Commit();
-
-                        GetCurrentProgramDtls();
-                    }
-                    catch
-                    {
-                        trans.Rollback();
-                    }
-                }
-            }
-
-        });
-
-        public override RelayCommand SaveCommand => new RelayCommand(() => 
-        {
-            using (var trans = DC.Database.BeginTransaction()) 
-            {
                 try
                 {
-                    DoAdd();
-                    trans.Commit();
-                    IsOk = true;
-                    ((Window)View).Close();
+                    
+
+                    foreach (var item in Entity.ProgramDtls.Where(w => w.Checked).ToList())
+                    {
+                        DC.DeleteEntity(item);
+                        Entity.ProgramDtls.Remove(item);
+                    }
+
+                    if (!Entity.ProgramDtls.Any())
+                    {
+                        Entity.LatestVersion = "1.0.0.0";
+                    }
+                    else
+                    {
+                        var LastProgramDtl = Entity.ProgramDtls.OrderByDescending(o => o.CreateTime).FirstOrDefault();
+                        Entity.LatestVersion = LastProgramDtl.CurrentVersion;
+                    }
+                    
+
+                    DC.Client.CommitTran();
+
+                    GetCurrentProgramDtls();
                 }
                 catch
                 {
-                    trans.Rollback();
-                   
+                    
                 }
+
             }
+
         });
+
+        public RelayCommand SaveCommand => new RelayCommand(() =>
+       {
+
+           try
+           {
+               
+               DoAdd();
+               
+               IsOk = true;
+               ((Window)View).Close();
+           }
+           catch
+           {
+               
+
+           }
+
+       });
         #endregion
     }
 }

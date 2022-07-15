@@ -26,9 +26,17 @@ namespace Vampirewal.UpdateService
 {
     public class ViewModelLocator : ViewModelLocatorBase
     {
+        public override void InitRegisterService()
+        {
+            CustomIoC.Instance.Register<IAppConfig, VampirewalConfig>();
+            CustomIoC.Instance.Register<IDataContext, ServiceDataContext>();
+
+            CustomIoC.Instance.Register<ILogger, VampirewalLog>();
+            CustomIoC.Instance.Register<IDialogMessage, VampirewalDialog>();
+        }
+
         public override void InitLocator()
         {
-            CustomIoC.Instance.Register<IDataContext, ServiceDataContext>();
 
             CustomIoC.Instance.Register<MainViewModel>();
             CustomIoC.Instance.Register<ProgramInfoViewModel>();

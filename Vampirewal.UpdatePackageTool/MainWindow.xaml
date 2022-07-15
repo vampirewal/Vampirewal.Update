@@ -13,13 +13,14 @@
                      Height="450"
                      Background="#2F3437"
                      Foreground="#EBEBEB"
-                     LeftMenuMaxWidth="260"
+                     LeftMenuMaxWidth="460"
                      IsOpenWindowSize="True"
                      Width="800">
     <VWin:MainWindowBase.LeftContent>
         <ScrollViewer>
             <StackPanel Margin="0,5">
                 <vc:TitleContent Title="AppToken"
+                                 Margin="5"
                                  TitleForeground="{StaticResource BaseForeground}"
                                  TitleWidth="80">
                     <TextBox Width="150" Name="aa"
@@ -31,7 +32,7 @@
                         </i:Interaction.Triggers>
                     </TextBox>
                 </vc:TitleContent>
-                <vc:TitleContent Title="AppToken"
+                <vc:TitleContent Title="ServerIP" Margin="5"
                                  TitleForeground="{StaticResource BaseForeground}"
                                  TitleWidth="80">
                     <TextBox Width="150"
@@ -43,8 +44,45 @@
                         </i:Interaction.Triggers>
                     </TextBox>
                 </vc:TitleContent>
+                
+                <vc:TitleContent Title="ServerIP"
+                                 Margin="5"
+                                 TitleForeground="{StaticResource BaseForeground}"
+                                 TitleWidth="80">
+                    <TextBox Width="150"
+                             Text="{Binding Config.UpdateSetting.ServerIp,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="TextChanged">
+                                <i:InvokeCommandAction Command="{Binding TextChangedCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
+                </vc:TitleContent>
+                
+                <vc:TitleContent Title="路径"
+                                 Margin="5"
+                                 TitleForeground="{StaticResource BaseForeground}"
+                                 TitleWidth="80">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Width="150"
+                                 Text="{Binding Config.FileUploadOptions.UploadDir,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                 IsReadOnly="True">
+                            <!--<i:Interaction.Triggers>
+                            <i:EventTrigger EventName="TextChanged">
+                                <i:InvokeCommandAction Command="{Binding TextChangedCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>-->
+                        </TextBox>
+                        <Button Style="{StaticResource ButtonSuccess.Small}"
+                                Content="文件夹"
+                                Command="{Binding SelectFloderCommand}"/>
+                    </StackPanel>
+                    
+                </vc:TitleContent>
             </StackPanel>
         </ScrollViewer>
     </VWin:MainWindowBase.LeftContent>
-    <Grid></Grid>
+    <Grid>
+        <Button Content="打包" Command="{Binding SelectFileCommand}"/>
+    </Grid>
 </VWin:MainWindowBase>

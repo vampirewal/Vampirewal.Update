@@ -4,9 +4,9 @@
     "AppVersion": "1.0.0.0",
     "ConnectionStrings": [
         {
-            "Key": "defulat",
+            "Key": "default",
             "Value": "Data Source=ServiceDB.db",
-            "DbType": 4,
+            "DbType": 2,
             "Version": "1.0",
             "DbContext": "ServiceDataContext"
         }

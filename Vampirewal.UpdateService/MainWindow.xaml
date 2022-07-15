@@ -36,13 +36,16 @@
                             <ImageBrush ImageSource="Vampirewal-Logo.png" />
                         </Border.Background>
                     </Border>
-
-
                     <Button Style="{StaticResource ButtonSuccess}"
                             Content="开始运行"
-                            Margin="5" Command="{Binding StartRunServer}" Visibility="{Binding IsStartOk,Converter={StaticResource Boolean2VisibilityReConverter}}"
-                            Width="150" />
+                            Margin="5"
+                            Command="{Binding StartRunServer}"
+                            Visibility="{Binding IsStartOk,Converter={StaticResource Boolean2VisibilityReConverter}}"
+                            Width="150">
+                        
+                    </Button>
                     <Button Style="{StaticResource ButtonDanger}"
+                            Command="{Binding StopRunServerCommand}"
                             Content="停止运行"
                             Margin="5" Visibility="{Binding IsStartOk,Converter={StaticResource Boolean2VisibilityConverter}}"
                             Width="150" />

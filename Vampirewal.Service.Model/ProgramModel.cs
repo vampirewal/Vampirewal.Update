@@ -23,7 +23,7 @@ using Vampirewal.Core.Models;
 namespace Vampirewal.Service.Model
 {
     [Table("Program_Service")]
-    public class ProgramModel : TopBaseModel
+    public class ProgramModel : BillBaseModel
     {
         private string token = "";
         private string name = "";
@@ -72,7 +72,7 @@ namespace Vampirewal.Service.Model
     }
 
     [Table("ProgramDtl_Service")]
-    public class ProgramDtl : TopBaseModel
+    public class ProgramDtl : DetailBaseModel
     {
         /// <summary>
         /// 程序modelId
@@ -100,5 +100,40 @@ namespace Vampirewal.Service.Model
         /// 是否强制更新
         /// </summary>
         public bool IsForcedUpdate { get => isForcedUpdate; set { isForcedUpdate = value; DoNotify(); } }
+
+        private DateTime? _CreateTime;
+
+        public DateTime? CreateTime
+        {
+            get
+            {
+                if (!_CreateTime.HasValue)
+                {
+                    _CreateTime = DateTime.Now;
+                }
+
+                return _CreateTime;
+            }
+            set
+            {
+                _CreateTime = value;
+                DoNotify("CreateTime");
+            }
+        }
+
+        private string _CreateBy;
+        public string CreateBy
+        {
+            get
+            {
+                return _CreateBy;
+            }
+            set
+            {
+                _CreateBy = value;
+                DoNotify();
+            }
+        }
+
     }
 }

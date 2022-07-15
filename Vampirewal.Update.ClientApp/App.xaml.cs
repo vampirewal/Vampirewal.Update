@@ -18,11 +18,18 @@ namespace Vampirewal.Update.ClientApp
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            SetAssembly(Assembly.GetExecutingAssembly());
-
             base.OnStartup(e);
-
-            OpenWinodw(ViewKeys.MainView);
         }
+        //public override Assembly CurrentAssembly()
+        //{
+        //    return Assembly.GetExecutingAssembly();
+        //}
+
+        protected override string FirstWindowName()
+        {
+            return ViewKeys.MainView;
+        }
+
+
     }
 }

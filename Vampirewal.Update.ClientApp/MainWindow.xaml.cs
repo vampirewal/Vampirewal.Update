@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Vampirewal.Core.IoC;
 using Vampirewal.Core.WpfTheme.WindowStyle;
 
 namespace Vampirewal.Update.ClientApp
@@ -19,6 +20,7 @@ namespace Vampirewal.Update.ClientApp
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    [VampirewalIoCRegister("Vampirewal.Update.ClientApp.MainWindow", RegisterType.View)]
     public partial class MainWindow : WindowBase
     {
         public MainWindow()

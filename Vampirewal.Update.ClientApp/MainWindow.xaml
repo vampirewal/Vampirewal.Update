@@ -25,7 +25,7 @@
                 Margin="5">
             <TextBox x:Name="UpdateDes"
                      TextWrapping="Wrap"
-                     Background="Transparent"
+                     Background="Transparent" 
                      Text="{Binding UpdateDes}"
                      VerticalContentAlignment="Top"
                      IsReadOnly="True" />
